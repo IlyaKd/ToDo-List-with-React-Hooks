@@ -29,7 +29,8 @@ const ItemList = ({ items, onClickDone, onClickDelete}) => {
                       {...provided.dragHandleProps}
                       ref={provided.innerRef}
                     >
-                      <Item 
+                      <Item
+                        date={item.date}
                         value={item.value} 
                         isDone={item.isDone}
                         id={item.id}

@@ -27,9 +27,22 @@
     line-height: 16px;
 }
 
+.item_danger {
+    color: red;
+}
+
 .done {
     text-decoration: line-through;
     color: #ccc;
+}
+
+.date {
+    padding-right: 10px;
+}
+
+.date_danger {
+    padding-right: 10px;
+    color: red;
 }
 
 .checkbox {

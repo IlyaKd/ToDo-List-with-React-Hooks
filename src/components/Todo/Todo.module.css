@@ -13,7 +13,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0 32px 0;
+    /*margin: 0 0 32px 0;*/
 }
 
 .title {
@@ -23,6 +23,29 @@
     font-weight: bold;
     font-size: 28px;
     line-height: 100%;
+}
+
+.btn_wrap {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 10px 0;
+}
+
+.btn {
+    padding: 2px 8px;
+    color: #000;
+    background-color: transparent;
+    border: 1px solid transparent;
+    outline: none;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.btn:hover {
+    cursor: pointer;
+    opacity: .8;
+    transition: .3s;
 }
 
 .items_section {

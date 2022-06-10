@@ -9,9 +9,13 @@ import { DragDropContext } from 'react-beautiful-dnd';
 const Todo = () => {
 
   const initialState = {
-    items: 
-    JSON.parse(localStorage.getItem('items')) || [],
-    filter: 'all'
+    items: //JSON.parse(localStorage.getItem('items')) || [],
+      [
+        {"date":"17.06.2022","value":"Задача 1","isDone":false,"id":1},
+        {"date":"17.06.2022","value":"Задача 2","isDone":false,"id":2},
+      ],
+    
+    filter: 'all',
   };
 
   const [items, setItems] = useState(initialState.items);
@@ -41,10 +45,19 @@ const Todo = () => {
     setItems(newItemList);
   };
 
+  // удаление всех задач
+  const onClickDeleteAll = () => { setItems([]) };
+
   const onClickAdd = value => {
+
+    // текущая дата + 1 неделя
+    const today = new Date();
+    today.setDate(today.getDate() + 7);
+
     setItems([
       ...items,
       {
+        date: today.toLocaleDateString('ru-RU'),
         value,
         isDone: false,
         id: Date.now()
@@ -52,7 +65,6 @@ const Todo = () => {
     ]);
   };
 
-  
   const onClickFilter = filter => {
     setFilter(filter)
   };
@@ -93,6 +105,9 @@ const Todo = () => {
             filter={filter}
             onClickFilter={onClickFilter} />
         </header>
+        <div className={styles.btn_wrap} >
+          <button className={styles.btn} onClick={() => onClickDeleteAll()}>Очистить список</button>
+        </div>
         <div className={styles.items_section}>
           <ItemList
             items={filteredTasks} 
