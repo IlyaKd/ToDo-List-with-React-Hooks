@@ -8,7 +8,7 @@ const InputItem = ({ items, onClickAdd }) => {
     const initialstate = {
         inputValue: '',
         error: false,
-        repeat: false
+        repeat: false,
     };
 
     const [inputValue, setInputValue] = useState(initialstate.inputValue);
@@ -37,11 +37,13 @@ const InputItem = ({ items, onClickAdd }) => {
             className={classnames({
                 [styles.form]: true,
                 [styles.error]: error,
-                [styles.repeat]: repeat
+                [styles.repeat]: repeat,
+                [styles.maxLengthInputValue]: inputValue.length === 240,
             })}>
             <input
                 type='text'
                 placeholder={'Просто введите сюда название дела...'}
+                maxlength="240"
                 value={inputValue}
                 onChange={event => setInputValue(event.target.value)}
                 className={styles.input}
