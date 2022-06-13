@@ -8,29 +8,40 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 const Todo = () => {
 
+  let task = JSON.parse(localStorage.getItem('items') || '');
+
   const initialState = {
-    items: //JSON.parse(localStorage.getItem('items')) || [],
-      [
-        {"date":"17.06.2022","value":"Задача 1","isDone":false,"id":1},
-        {"date":"17.06.2022","value":"Задача 2","isDone":false,"id":2},
+    items: task.length > 0
+      ? task
+      : [
+        { "date": "07.06.2022", "value": "Задача 1", "isDone": false, "id": 1 },
+        { "date": "17.06.2022", "value": "Задача 2", "isDone": false, "id": 2 },
       ],
-    
     filter: 'all',
   };
 
   const [items, setItems] = useState(initialState.items);
   const [filter, setFilter] = useState(initialState.filter);
 
+  // берёт значение состояния из items, преобразовывает в строку и добавляет в localStorage
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items));
-  });
+  }, [items]);
+
+  // берёт значение из localStorage, преобразовывает в объект JSON и добавляет в состояние
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('items') || '');
+    if (items) {
+      setItems(items);
+    }
+  }, []);
 
   const onClickDone = id => {
     const newItemList = items.map(item => {
-      const newItem = { ...item};
+      const newItem = { ...item };
 
       if (item.id === id) {
-        newItem.isDone =!item.isDone;
+        newItem.isDone = !item.isDone;
       }
 
       return newItem;
@@ -87,7 +98,7 @@ const Todo = () => {
   const onDragEnd = result => {
     const { destination, source } = result;
     if (!destination) return;
-    
+
     const newItemList = [...items];
     const [deletedItem] = newItemList.splice(source.index, 1);
     newItemList.splice(destination.index, 0, deletedItem);
@@ -110,14 +121,14 @@ const Todo = () => {
         </div>
         <div className={styles.items_section}>
           <ItemList
-            items={filteredTasks} 
-            onClickDone={onClickDone} 
+            items={filteredTasks}
+            onClickDone={onClickDone}
             onClickDelete={onClickDelete} />
           <InputItem
             items={items}
             onClickAdd={onClickAdd} />
         </div>
-      </DragDropContext>  
+      </DragDropContext>
     </Card>);
 };
 

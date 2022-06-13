@@ -24,7 +24,7 @@
     align-items: center;
     color: #000;
     font-size: 14px;
-    line-height: 16px;
+    line-height: 16px; 
 }
 
 .item_danger {
@@ -43,6 +43,12 @@
 .date_danger {
     padding-right: 10px;
     color: red;
+}
+
+.task {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .checkbox {
