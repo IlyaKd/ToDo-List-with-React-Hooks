@@ -43,7 +43,7 @@ const InputItem = ({ items, onClickAdd }) => {
             <input
                 type='text'
                 placeholder={'Просто введите сюда название дела...'}
-                maxlength="240"
+                maxLength={240}
                 value={inputValue}
                 onChange={event => setInputValue(event.target.value)}
                 className={styles.input}

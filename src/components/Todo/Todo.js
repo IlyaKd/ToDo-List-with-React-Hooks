@@ -5,15 +5,13 @@ import ItemList from '../ItemList/ItemList';
 import Control from '../Control/Control';
 import styles from './Todo.module.css';
 import { DragDropContext } from 'react-beautiful-dnd';
+import LoadMyFile from '../LoadMyFile/LoadMyFile';
 
 const Todo = () => {
 
-  let task = JSON.parse(localStorage.getItem('items') || '');
-
   const initialState = {
-    items: task.length > 0
-      ? task
-      : [
+    items:
+      [
         { "date": "07.06.2022", "value": "Задача 1", "isDone": false, "id": 1 },
         { "date": "17.06.2022", "value": "Задача 2", "isDone": false, "id": 2 },
       ],
@@ -23,6 +21,7 @@ const Todo = () => {
   const [items, setItems] = useState(initialState.items);
   const [filter, setFilter] = useState(initialState.filter);
 
+/*
   // берёт значение состояния из items, преобразовывает в строку и добавляет в localStorage
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items));
@@ -35,7 +34,7 @@ const Todo = () => {
       setItems(items);
     }
   }, []);
-
+*/
   const onClickDone = id => {
     const newItemList = items.map(item => {
       const newItem = { ...item };
@@ -59,21 +58,39 @@ const Todo = () => {
   // удаление всех задач
   const onClickDeleteAll = () => { setItems([]) };
 
+  // текущая дата + 1 неделя
+  const generateDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 7);
+    return date
+  };
+
   const onClickAdd = value => {
-
-    // текущая дата + 1 неделя
-    const today = new Date();
-    today.setDate(today.getDate() + 7);
-
     setItems([
       ...items,
       {
-        date: today.toLocaleDateString('ru-RU'),
+        date: generateDate().toLocaleDateString('ru-RU'),
         value,
         isDone: false,
         id: Date.now()
       }
     ]);
+  };
+
+  const onClickFileAdd = (fileList) => {
+    const inputList = fileList.map((item, index) => {
+      return {
+        date: generateDate().toLocaleDateString('ru-RU'),
+        value: item,
+        isDone: false,
+        id: Date.now() + index
+      }
+    })
+
+    setItems([
+      ...items,
+      ...inputList
+    ])
   };
 
   const onClickFilter = filter => {
@@ -128,6 +145,9 @@ const Todo = () => {
             items={items}
             onClickAdd={onClickAdd} />
         </div>
+        <LoadMyFile 
+          items={items}
+          onClickFileAdd={onClickFileAdd} />
       </DragDropContext>
     </Card>);
 };
